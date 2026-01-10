@@ -13,7 +13,7 @@ RUN apt-get update \
 # Copy the requirements file into the container
 COPY requirements.txt .
 
-# Install app dependencies
+# Install app dependenciess
 RUN pip install mysqlclient
 RUN pip install --no-cache-dir -r requirements.txt
 
