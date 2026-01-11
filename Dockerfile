@@ -1,25 +1,23 @@
-# Use an official Python runtime as the base image
 FROM python:3.9-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# install required packages for system
+# Install required system packages
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y gcc default-libmysqlclient-dev pkg-config \
+    && apt-get install -y --no-install-recommends \
+       gcc \
+       libmariadb-dev \
+       libmariadb-dev-compat \
+       pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the requirements file into the container
+# Copy requirements file
 COPY requirements.txt .
 
-# Install app dependenciess
-RUN pip install mysqlclient
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
 COPY . .
 
-# Specify the command to run your application
 CMD ["python", "app.py"]
-
